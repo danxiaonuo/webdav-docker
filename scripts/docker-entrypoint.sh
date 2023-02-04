@@ -22,12 +22,12 @@ fi
 
 # 处理所有权问题
 if [ $OWNER -gt 0 ]; then
-    adduser webdrive -u $OWNER -D -G nobody
+    adduser webdrive -u $OWNER -D -G users
     chown webdrive $DEST
 fi
 
 # 挂载并验证是否存在某些内容
-mount -t webdavfs -ousername=$WEBDRIVE_USERNAME,password=$WEBDRIVE_PASSWORD,rwdirops,maxconns=65535,mode=755 $WEBDRIVE_URL $DEST
+mount -t webdavfs -ousername=$WEBDRIVE_USERNAME,password=$WEBDRIVE_PASSWORD,rwdirops,maxconns=65535,uid=$OWNER,gid=$OGID,mode=755 $WEBDRIVE_URL $DEST
 
 # 检测挂载成功。执行成功后执行该命令。
 if [ -n "$(ls -1A $DEST)" ]; then
