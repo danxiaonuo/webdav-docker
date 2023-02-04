@@ -1,0 +1,53 @@
+version: '3.9'
+services:
+
+  # 服务名
+  webdav:
+    # 模拟一个伪终端
+    tty: true
+    # 打开标准输入,可以接受外部输入
+    stdin_open: true
+    # 主机名
+    hostname: webdav
+    # 指定容器名称
+    container_name: webdav
+    # 指定为镜像名称或镜像ID
+    image: danxiaonuo/webdav:latest
+    # 覆盖容器启动后默认执行的命令
+    # command: /sbin/init
+    # 允许容器中运行一些特权命令
+    privileged: true
+    # 指定容器退出后的重启策略为始终重启
+    restart: always
+    # 指定容器的内核能力(capacity)分配
+    cap_add:
+     - ALL
+    # 数据卷所挂载路径设置
+    volumes:
+      # 数据目录
+      - /mnt/nas:/mnt/webdrive:rshared
+      # 同步宿主机时区与时间
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro,cached
+      - /etc/localtime:/etc/localtime:ro,cached
+      # 共享内核
+      - /lib/modules:/lib/modules:ro,cached
+      - /etc/sysctl.conf:/etc/sysctl.conf:ro,cached
+    # 环境变量
+    environment:
+      # WebDAV 资源的 URL
+      - WEBDRIVE_URL=http://127.0.0.1:5244/dav
+      # 用于访问资源的用户
+      - WEBDRIVE_USERNAME=
+      # 该用户的密码
+      - WEBDRIVE_PASSWORD=
+    # 指定设备映射关系
+    devices:
+      - /dev/fuse
+    # 配置容器连接的网络
+    network_mode: "host"
+    # 指定容器的 ulimits 限制值
+    ulimits:
+      nproc: 65535
+      nofile:
+          soft: 65535
+          hard: 65535
