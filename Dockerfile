@@ -83,6 +83,9 @@ ARG LANG=C.UTF-8
 ENV LANG=$LANG
 # 用户ID
 ENV OWNER=0
+# 组ID
+ENV OGID=100
+
 # 挂载目录
 ENV WEBDRIVE_MOUNT=/mnt/webdrive
 # URL地址
