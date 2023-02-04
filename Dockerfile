@@ -80,6 +80,16 @@ ENV TZ=$TZ
 # 语言设置
 ARG LANG=C.UTF-8
 ENV LANG=$LANG
+# 用户ID
+ENV OWNER=0
+# 挂载目录
+ENV WEBDRIVE_MOUNT=/mnt/webdrive
+# URL地址
+ENV WEBDRIVE_URL=
+# 用户名
+ENV WEBDRIVE_USERNAME=
+# 密码
+ENV WEBDRIVE_PASSWORD=
 
 ARG PKG_DEPS="\
       zsh \
@@ -133,6 +143,9 @@ RUN set -eux && \
  
 # 容器信号处理
 STOPSIGNAL SIGQUIT
+
+# ***** 挂载目录 *****
+VOLUME ${WEBDRIVE_MOUNT}
 
 # ***** 入口 *****
 ENTRYPOINT [ "tini", "-g", "--", "/usr/bin/docker-entrypoint.sh" ]
