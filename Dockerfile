@@ -58,11 +58,12 @@ RUN set -eux && \
    # 更新时间
    echo ${TZ} > /etc/timezone && \
    # 克隆源码运行安装
-   git clone --depth=1 -b $SINGBOX_VERSION --progress https://github.com/danxiaonuo/webdavfs.git /src && \
+   git clone --depth=1 -b v3 --progress https://github.com/miquels/webdavfs.git /src && \
    cd /src && export COMMIT=$(git rev-parse --short HEAD) && \
    go env -w GO111MODULE=on && \
    go env -w CGO_ENABLED=1 && \
    go env && \
+   go mod tidy && \
    go get && go build
 
 ##########################################
