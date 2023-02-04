@@ -136,7 +136,7 @@ RUN set -eux && \
 COPY --from=builder /src/webdavfs /sbin/mount.webdavfs
 
 # 拷贝文件
-COPY ["COPY ./scripts/*.sh", "/usr/bin/"]
+COPY ["./scripts/*.sh", "/usr/bin/"]
  
 # 授予文件权限
 RUN set -eux && \
