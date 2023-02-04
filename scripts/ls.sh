@@ -6,6 +6,6 @@ DEST=${WEBDRIVE_MOUNT:-/mnt/webdrive}
 . trap.sh
 
 while true; do
-    ls $DEST
+    ls -al $DEST
     sleep $PERIOD
 done
