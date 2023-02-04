@@ -109,7 +109,7 @@ ARG PKG_DEPS="\
       zip \
       unzip \
       tini \
-      fuse3 \
+      fuse \
       ca-certificates"
 ENV PKG_DEPS=$PKG_DEPS
 
@@ -133,15 +133,14 @@ RUN set -eux && \
    /bin/zsh
    
 # 拷贝webdavfs
-COPY --from=builder /src/webdavfs /usr/sbin/mount.webdavfs
+COPY --from=builder /src/webdavfs /sbin/mount.webdavfs
 
 # 拷贝文件
 COPY ["./scripts/*.sh", "/usr/bin/"]
  
 # 授予文件权限
 RUN set -eux && \
-    chmod a+x /usr/bin/*.sh /usr/sbin/mount.webdavfs && \
-    ln -sf /usr/sbin/mount.webdavfs /sbin/mount.webdavfs
+    chmod a+x /usr/bin/*.sh /sbin/mount.webdavfs
  
 # 容器信号处理
 STOPSIGNAL SIGQUIT
