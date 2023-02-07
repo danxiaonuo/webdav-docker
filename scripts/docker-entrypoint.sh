@@ -28,7 +28,6 @@ fi
 
 # 挂载并验证是否存在某些内容
 mount -t webdavfs -ousername=$WEBDRIVE_USERNAME,password=$WEBDRIVE_PASSWORD,rwdirops,maxconns=65535,uid=$OWNER,gid=$OGID,mode=755 $WEBDRIVE_URL $DEST
-nsenter -t $(pgrep tini) -m -- mount --verbose --make-shared $DEST
 
 # 检测挂载成功。执行成功后执行该命令。
 if [ -n "$(ls -1A $DEST)" ]; then
